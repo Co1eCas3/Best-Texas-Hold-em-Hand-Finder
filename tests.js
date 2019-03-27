@@ -35,25 +35,27 @@ const generateTestHand = () => {
 const generateTests = numOfTests => {
   let i = 0;
 
+  const write = testHand => {
+    let output = `<div>Community Cards: ${testHand[0]}</div><div>Players: <ul>`;
+    output += testHand.reduce(
+      (str, hand, i) => (i > 0 ? (str += `<li>${hand}</li>`) : ""),
+      ""
+    );
+    output += "</ul></div>";
+    return output;
+  };
+
   while (i < numOfTests) {
     let testHand = generateTestHand();
-    console.log(showdown(...testHand), testHand);
+    document.body.innerHTML += write(testHand);
+    document.body.innerHTML += `<div>${showdown(
+      ...testHand
+    )}</div><div style='height: 20px'></div>`;
     i++;
   }
 };
 
 generateTests(20);
-
-// FIRST TEST BUGS:
-// console.log(
-//   showdown(
-//     ["10d", "Qc", "Jh", "8c", "Jd"],
-//     ["2h", "Ks"],
-//     ["Kh", "4d"],
-//     ["10h", "3s"],
-//     ["2d", "3d"]
-//   )
-// );
 
 // AWESOME (working) TEST CASES:
 // console.log(showdown(["3s", "8d", "3d", "8c", "6s"], ["10h", "2s"], ["6c", "7d"], ["Ac", "10c"], ["9s", "5s"])); 2pair on board A kicker ex.
@@ -67,17 +69,6 @@ generateTests(20);
 //     ["2h", "7d"], // 7DUECE
 //     ["7s", "6c"], // STRAIGHT 7HI
 //     ["Jd", "8d"] // FLUSH JHI
-//   )
-// );
-
-// FIRST TEST BUG FIX TEST:
-// console.log(
-//   showdown(
-//     ["10d", "Qc", "Jh", "8c", "Jd"],
-//     ["Qh", "Ks"],
-//     ["Kh", "Qd"],
-//     ["10h", "3s"],
-//     ["10s", "3d"]
 //   )
 // );
 
