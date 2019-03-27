@@ -50,7 +50,7 @@ class HandFinder {
     };
   }
 
-  // Primary method/data-flow controller
+  // bestHand() = Primary method/data-flow controller
   // best hand possibilities are determined by how many ranks are present, i.e.:
 
   //  Upper Tier Hands:
