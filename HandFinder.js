@@ -141,17 +141,15 @@ class HandFinder {
       // a set (no quads) means full house
       if (set && (this.set(cur) || this.pair(cur))) {
         pair = this.set(cur) || this.pair(cur); // admittedly, 'pair' is a bit of a misnomer
-        // in the case that this returns a set,
-        // but for the sake of the return from boat(),
-        // it makes more sense, as we only need two
-        // of the three cards
+                                                // in the case that this returns a set,
+                                                // but for the sake of the return from boat(),
+                                                // it makes more sense, as we only need two
+                                                // of the three cards
         return this.boat(set, pair);
       } else if (pair) {
         // full house still possible
-        if (this.ranks.arr.length === 3) {
-          // 2pair only possible with length = 4
-          if (this.set(cur)) {
-            // -- wait for set to make full house
+        if (this.ranks.arr.length === 3) {  // 2pair only possible with length = 4
+          if (this.set(cur)) {              // -- wait for set to make full house
             return this.boat(this.set(cur), pair);
           } else {
             continue;
@@ -191,7 +189,7 @@ class HandFinder {
     };
 
     // determines if the last 4 values in this.ranks.arr are == 14
-    // i.e. wheel draw
+    // i.e. 5 + 4 + 3 + 2
     const wheel = butt => butt.reduce((sum, val) => sum + val, 0) === 14;
 
     // compare the sum of values in a 5-card slice to value returned
@@ -227,7 +225,7 @@ class HandFinder {
       slicePos--;
     }
 
-    // if A present and no straight found, check for wheel
+    // if ace present and no higher straight found, check for wheel
     if (!strFound && ranksToInts[0] === 14) {
       const butt = ranksToInts.slice(-4);
       if (wheel(butt)) {
@@ -254,8 +252,7 @@ class HandFinder {
         for (let i = 0; i < 6; i++) {
           let cur = this.ranks.obj[this.ranks.arr[i]];
 
-          if (this.pair(cur)) {
-            // again, only looking for a pair here
+          if (this.pair(cur)) {  // again, only looking for a pair here
             made = this.fill(this.pair(cur));
 
             this.handInfo.type = "Pair";
@@ -275,11 +272,9 @@ class HandFinder {
         for (let i = 0; i < 5; i++) {
           let cur = this.ranks.obj[this.ranks.arr[i]];
 
-          if (pair && this.pair(cur)) {
-            // if we've found a pair all we're looking
+          if (pair && this.pair(cur)) {                // if we've found a pair all we're looking
             return this.twoPair(pair, this.pair(cur)); // for is another pair
-          } else if (this.set(cur)) {
-            // otherwise, check for a set
+          } else if (this.set(cur)) {                  // otherwise, check for a set
             made = this.fill(this.set(cur));
 
             this.handInfo.type = "Three-of-a-kind";
@@ -290,9 +285,8 @@ class HandFinder {
             this.handInfo.hi3 = made[4].val;
 
             return this.handInfo;
-          } else if (!pair) {
-            // otherwise, keep checking for a pair
-            pair = this.pair(cur); // (if no pair already found)
+          } else if (!pair) {                          // otherwise, keep checking for a pair
+            pair = this.pair(cur);                     // (if no pair already found)
           }
         }
       default:
